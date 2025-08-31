@@ -1,13 +1,25 @@
-# This is the official instruction manual for our GitHub Actions factory
+# This is the official, perfected instruction manual for our GitHub Actions factory
 name: One-Click Publisher Build Worker
 
-# This tells the factory to wake up ONLY when we send it a special signal from our Firebase Function
+# This tells the factory to wake up ONLY when we send it a special signal
+# OR when a human manually presses the "Run workflow" button
 on:
+  push:
+    branches:
+      - main # This will help GitHub recognize the file initially
   workflow_dispatch:
 
 jobs:
   build:
+    # Do not run on commits to the README, only on real code changes
+    if: "contains(github.event.head_commit.message, 'Initial commit') == false"
+    
     runs-on: ubuntu-latest # The factory will use a clean, powerful Linux machine
+
+    # Granting the factory permission to talk back to our city's database
+    permissions:
+      contents: 'read'
+      id-token: 'write'
 
     steps:
       - name: Checkout the blueprints
@@ -19,14 +31,15 @@ jobs:
           node-version: '16'
 
       - name: Install factory parts
-        run: npm install # Step 3: Gather all the necessary tools from package.json
+        run: npm install # Step 3: Gather all the tools from package.json
 
       - name: Authenticate with Google Cloud
         # This is the magic key that lets our factory talk back to our city's database
+        id: 'auth'
         uses: 'google-github-actions/auth@v0'
         with:
           credentials_json: '${{ secrets.GCP_SA_KEY }}'
 
       - name: Unleash the Worker
         run: npm start # Step 4: Run our build_worker_v2.js script and bring the dream to life
-        
+
