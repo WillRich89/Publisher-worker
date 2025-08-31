@@ -97,4 +97,4 @@ async function processBuild(jobId, job) {
       console.log(`[${jobId}] Cleaning the workshop.`);
       fs.rmSync(buildDir, { recursive: true, force: true });
   }
-}
+      }
