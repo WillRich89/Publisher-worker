@@ -1,19 +1,11 @@
-# This is the official, perfected instruction manual for our GitHub Actions factory
+# This is the official, perfected, and final instruction manual for our GitHub Actions factory
 name: One-Click Publisher Build Worker
 
-# This tells the factory to wake up ONLY when we send it a special signal
-# OR when a human manually presses the "Run workflow" button
 on:
-  push:
-    branches:
-      - main # This will help GitHub recognize the file initially
-  workflow_dispatch:
+  workflow_dispatch: # This allows us to run it manually
 
 jobs:
   build:
-    # Do not run on commits to the README, only on real code changes
-    if: "contains(github.event.head_commit.message, 'Initial commit') == false"
-    
     runs-on: ubuntu-latest # The factory will use a clean, powerful Linux machine
 
     # Granting the factory permission to talk back to our city's database
@@ -34,9 +26,9 @@ jobs:
         run: npm install # Step 3: Gather all the tools from package.json
 
       - name: Authenticate with Google Cloud
-        # This is the magic key that lets our factory talk back to our city's database
+        # This is the NEW, UPGRADED, and CORRECT version of the key
         id: 'auth'
-        uses: 'google-github-actions/auth@v0'
+        uses: 'google-github-actions/auth@v2'
         with:
           credentials_json: '${{ secrets.GCP_SA_KEY }}'
 
