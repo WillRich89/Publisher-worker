@@ -28,10 +28,9 @@ jobs:
       - name: Authenticate with Google Cloud
         # This is the NEW, UPGRADED, and CORRECT version of the key
         id: 'auth'
-        uses: 'google-github-actions/auth@v2'
+        uses: 'google-github-actions/auth@v3' # <--- THIS LINE IS UPDATED
         with:
           credentials_json: '${{ secrets.GCP_SA_KEY }}'
 
       - name: Unleash the Worker
-        run: npm start # Step 4: Run our build_worker_v2.js script and bring the dream to life
-
+        run: npm start # Step 4: Run our build_worker_v2.js
