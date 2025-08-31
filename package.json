@@ -1,0 +1,16 @@
+{
+  "name": "publisher-worker",
+  "version": "1.0.0",
+  "description": "The build worker for the One-Click Publisher service.",
+  "main": "build_worker_v2.js",
+  "scripts": {
+    "start": "node build_worker_v2.js"
+  },
+  "dependencies": {
+    "firebase-admin": "^11.0.0",
+    "unzipper": "^0.10.11"
+  },
+  "engines": {
+    "node": "16"
+  }
+}
